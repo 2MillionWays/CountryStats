@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Add Info</title>
@@ -13,19 +14,19 @@
     </tr>
     <tr>
         <td>Population</td>
-        <td><a href="/app/pop">Add/Update</a></td>
+        <td><a href="${pageContext.request.contextPath}/app/pop">Add/Update</a></td>
     </tr>
     <tr>
         <td>Area</td>
-        <td><a href="/app/area">Add/Update</a></td>
+        <td><a href="${pageContext.request.contextPath}/app/area">Add/Update</a></td>
     </tr>
     <tr>
         <td>Average Life Duration</td>
-        <td><a href="/app/duration">Add/Update</a></td>
+        <td><a href="${pageContext.request.contextPath}/app/duration">Add/Update</a></td>
     </tr>
     <tr>
         <td>Life Quality Index</td>
-        <td><a href="/app/lqindex">Add/Update</a></td>
+        <td><a href="${pageContext.request.contextPath}/app/lqindex">Add/Update</a></td>
     </tr>
 </table>
 <h3>REST services</h3>
@@ -36,7 +37,7 @@
     </tr>
     <tr>
         <td>Get all countries and their details</td>
-        <td><a href="/rest">Try</a></td>
+        <td><a href="${pageContext.request.contextPath}/rest">Try</a></td>
     </tr>
 </table>
 </body>
