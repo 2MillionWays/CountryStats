@@ -3,6 +3,7 @@ package ua.com.codespace.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "country_details")
@@ -71,34 +72,22 @@ public class CountryDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CountryDetails)) return false;
-
         CountryDetails that = (CountryDetails) o;
-
-        if (getId() != that.getId()) return false;
-        if (Double.compare(that.getValue(), getValue()) != 0) return false;
-        if (getYear() != that.getYear()) return false;
-        if (getInformation() != that.getInformation()) return false;
-        return getCountry().equals(that.getCountry());
+        return Double.compare(that.getValue(), getValue()) == 0 &&
+                getYear() == that.getYear() &&
+                getInformation() == that.getInformation();
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + getInformation().hashCode();
-        temp = Double.doubleToLongBits(getValue());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + getYear();
-        result = 31 * result + getCountry().hashCode();
-        return result;
+
+        return Objects.hash(getInformation(), getValue(), getYear());
     }
 
     @Override
     public String toString() {
         return "CountryDetails{" +
-                "id=" + id +
-                ", information=" + information +
+                "information=" + information +
                 ", value=" + value +
                 ", year=" + year +
                 '}';

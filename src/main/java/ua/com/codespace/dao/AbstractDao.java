@@ -8,35 +8,35 @@ import org.springframework.core.GenericTypeResolver;
 
 import java.io.Serializable;
 
-public class AbstractDao<K extends Serializable, T> {
+class AbstractDao<K extends Serializable, T> {
 
     private final Class<T> persistentClass;
 
     @SuppressWarnings("unchecked")
-    public AbstractDao(){
+    AbstractDao() {
         this.persistentClass = (Class<T>) GenericTypeResolver.resolveTypeArguments(getClass(), AbstractDao.class)[1];
     }
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Session getSession(){
+    Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
-    public T getByKey(K key){
-        return (T) getSession().get(persistentClass,key);
+    T getByKey(K key) {
+        return getSession().get(persistentClass, key);
     }
 
-    public void persist(T entity){
+    void persist(T entity) {
         getSession().persist(entity);
     }
 
-    public void delete(T entity){
+    void delete(T entity) {
         getSession().delete(entity);
     }
 
-    protected Criteria createCriteria(){
+    Criteria createCriteria() {
         return getSession().createCriteria(persistentClass);
     }
 }

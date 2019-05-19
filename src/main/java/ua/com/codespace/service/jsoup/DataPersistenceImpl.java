@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.codespace.dao.CountryDao;
-import ua.com.codespace.dao.CountryDetailsDao;
 import ua.com.codespace.model.Country;
 import ua.com.codespace.model.CountryDetails;
 import ua.com.codespace.model.InformationType;
@@ -21,14 +20,11 @@ public class DataPersistenceImpl implements DataPersistence {
     @Autowired
     private CountryDao countryDao;
 
-    @Autowired
-    private CountryDetailsDao countryDetailsDao;
-
-    public void saveArea(){
+    public void saveArea() {
         Elements elements = dataExtraction.getArea();
         for (Element element : elements) {
             Country country = countryDao.getByName(element.select("a").text());
-            if (country == null){
+            if (country == null) {
                 country = new Country();
                 country.setName(element.select("a").text());
             }
@@ -39,34 +35,34 @@ public class DataPersistenceImpl implements DataPersistence {
             countryDetails.setYear(2017);
             countryDetails.setInformation(InformationType.AREA);
             country.getCountryDetails().add(countryDetails);
-            countryDetailsDao.save(countryDetails);
+            countryDao.save(country);
         }
     }
 
-    public void savePopulation(){
+    public void savePopulation() {
         Elements elements = dataExtraction.getPopulation();
         for (Element element : elements) {
             Country country = countryDao.getByName(element.select("a").text());
-            if (country == null){
+            if (country == null) {
                 country = new Country();
                 country.setName(element.select("a").text());
             }
             CountryDetails countryDetails = new CountryDetails();
             countryDetails.setValue(Double.valueOf(element.select("[class]").text()
-                    .replaceAll("\\s+","")));
+                    .replaceAll("\\s+", "")));
             countryDetails.setCountry(country);
             countryDetails.setYear(2017);
             countryDetails.setInformation(InformationType.POPULATION);
             country.getCountryDetails().add(countryDetails);
-            countryDetailsDao.save(countryDetails);
+            countryDao.save(country);
         }
     }
 
-    public void saveAvgLifeDuration(){
+    public void saveAvgLifeDuration() {
         Elements elements = dataExtraction.getAvgLifeDuration();
-        for (Element element : elements){
+        for (Element element : elements) {
             Country country = countryDao.getByName(element.select("a").text());
-            if (country == null){
+            if (country == null) {
                 country = new Country();
                 country.setName(element.select("a").text());
             }
@@ -76,15 +72,15 @@ public class DataPersistenceImpl implements DataPersistence {
             countryDetails.setYear(2017);
             countryDetails.setInformation(InformationType.AVG_LIFE_DURATION);
             country.getCountryDetails().add(countryDetails);
-            countryDetailsDao.save(countryDetails);
+            countryDao.save(country);
         }
     }
 
-    public void saveLifeQualityIndex(){
+    public void saveLifeQualityIndex() {
         Elements elements = dataExtraction.getLifeQualityIndex();
-        for (Element element : elements){
+        for (Element element : elements) {
             Country country = countryDao.getByName(element.select("td").eq(1).text());
-            if (country == null){
+            if (country == null) {
                 country = new Country();
                 country.setName(element.select("a").text());
             }
@@ -94,7 +90,7 @@ public class DataPersistenceImpl implements DataPersistence {
             countryDetails.setYear(2016);
             countryDetails.setInformation(InformationType.LIFE_QUALITY_INDEX);
             country.getCountryDetails().add(countryDetails);
-            countryDetailsDao.save(countryDetails);
+            countryDao.save(country);
         }
     }
 }

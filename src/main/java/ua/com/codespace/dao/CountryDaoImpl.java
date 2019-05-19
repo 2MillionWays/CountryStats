@@ -1,6 +1,7 @@
 package ua.com.codespace.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ua.com.codespace.model.Country;
@@ -32,7 +33,8 @@ public class CountryDaoImpl extends AbstractDao<Long, Country> implements Countr
 
     @SuppressWarnings("unchecked")
     public List<Country> getAllCountries() {
-        Criteria criteria = createCriteria();
-        return (List<Country>) criteria.list();
+        return createCriteria()
+                .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+                .list();
     }
 }

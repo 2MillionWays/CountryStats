@@ -1,8 +1,9 @@
 package ua.com.codespace.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "country")
@@ -16,7 +17,7 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CountryDetails> countryDetails = new ArrayList<>();
+    private Set<CountryDetails> countryDetails = new HashSet<>();
 
     public long getId() {
         return id;
@@ -34,11 +35,11 @@ public class Country {
         this.name = name;
     }
 
-    public List<CountryDetails> getCountryDetails() {
+    public Set<CountryDetails> getCountryDetails() {
         return countryDetails;
     }
 
-    public void setCountryDetails(List<CountryDetails> countryDetails) {
+    public void setCountryDetails(Set<CountryDetails> countryDetails) {
         this.countryDetails = countryDetails;
     }
 
@@ -46,20 +47,15 @@ public class Country {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Country)) return false;
-
         Country country = (Country) o;
-
-        if (getId() != country.getId()) return false;
-        if (!getName().equals(country.getName())) return false;
-        return getCountryDetails() != null ? getCountryDetails().equals(country.getCountryDetails()) : country.getCountryDetails() == null;
+        return getId() == country.getId() &&
+                Objects.equals(getName(), country.getName()) &&
+                Objects.equals(getCountryDetails(), country.getCountryDetails());
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + (getCountryDetails() != null ? getCountryDetails().hashCode() : 0);
-        return result;
+        return Objects.hash(getId(), getName(), getCountryDetails());
     }
 
     @Override
